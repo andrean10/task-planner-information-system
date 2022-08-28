@@ -1,0 +1,107 @@
+<%- include ../partials/header.ejs %> <%- include ../partials/navbar.ejs %> <%-
+include ../partials/sidebar.ejs %>
+
+<div class="content-wrapper kanban">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6">
+          <h1>
+            <div class="card-tools"><%= board.note; %></div>
+          </h1>
+        </div>
+        <div class="col-sm-6 d-none d-sm-block">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/">Beranda</a></li>
+            <li class="breadcrumb-item"><a href="/board">Board</a></li>
+            <li class="breadcrumb-item active">Detail</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content pb-3">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">
+          <i class="ion ion-clipboard mr-1"></i>
+          To Do List
+        </h3>
+
+        <div class="card-tools">
+          <ul class="pagination pagination-sm">
+            <li class="page-item"><a href="#" class="page-link">«</a></li>
+            <li class="page-item"><a href="#" class="page-link">1</a></li>
+            <li class="page-item"><a href="#" class="page-link">2</a></li>
+            <li class="page-item"><a href="#" class="page-link">3</a></li>
+            <li class="page-item"><a href="#" class="page-link">»</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body">
+        <ul class="todo-list ui-sortable" data-widget="todo-list">
+          <% for (let i = 0; i < tasks.length; i++) { %>
+          <li>
+            <!-- drag handle -->
+            <span class="handle ui-sortable-handle">
+              <i class="fas fa-ellipsis-v"></i>
+              <i class="fas fa-ellipsis-v"></i>
+            </span>
+            <!-- checkbox -->
+            <div class="icheck-primary d-inline ml-2">
+              <input
+                type="checkbox"
+                value=""
+                name="todo<%= i %>"
+                id="todoCheck<%= i %>"
+              />
+              <label for="todoCheck<%= i %>"></label>
+            </div>
+            <!-- todo text -->
+            <span class="text"><%= tasks[i].note %></span>
+            <!-- Emphasis label -->
+            <small class="badge badge-danger"
+              ><i class="far fa-clock"></i> 2 mins</small
+            >
+            <!-- General tools such as edit or delete-->
+            <div class="tools">
+              <form
+                action="/board/task/delete/<%= tasks[i]._id %>?_method=DELETE"
+                method="post"
+              >
+                <a
+                  style="color: yellowgreen"
+                  href="/board/task/<%= tasks[i]._id %>?idBoard=<%= board._id %>"
+                >
+                  <i class="fas fa-edit"></i>
+                </a>
+                <button class="btn" type="submit">
+                  <i class="fas fa-trash" style="color: red;"></i>
+                </button>
+              </form>
+              <!-- <a
+                href=""
+              >
+                
+              </a> -->
+            </div>
+          </li>
+          <% } %>
+        </ul>
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer clearfix">
+        <a
+          href="/board/task/create?idBoard=<%= board._id %>"
+          class="btn btn-primary float-right"
+        >
+          <i class="fas fa-plus"></i> Tambah tugas
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<%- include ../partials/footer.ejs %> <%- include ../partials/js.ejs %>

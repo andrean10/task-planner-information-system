@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { urlDb } = require("../config");
+const { urlDb } = require("./index");
 
 mongoose.connect(urlDb, {
   useUnifiedTopology: true,

@@ -1,0 +1,38 @@
+.small-box > .inner {
+  padding: 20px;
+}
+
+.small-box p {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.bg-gray {
+  background-color: #6c757d !important;
+  opacity: 30%;
+}
+
+.bg-gray:hover {
+  opacity: 50%;
+}
+
+.bg-success:hover {
+  opacity: 90%;
+}
+
+.content-wrapper.kanban .card.card-row .card:last-child {
+  margin-bottom: 0;
+  border-bottom-width: 1px;
+  margin-top: 12px;
+}
+
+.card-body {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  white-space: nowrap;
+}

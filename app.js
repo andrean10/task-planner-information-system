@@ -1,15 +1,12 @@
 var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const methodOverride = require("method-override");
-const session = require("express-session");
 const flash = require("connect-flash");
+const sessions = require("express-session");
 
-const indexRouter = require("./routes/index");
-// const categoryRouter = require("./app/category/router");
-// const nominalRouter = require("./app/nominal/router");
+var express = require("express");
+const path = require("path");
 
 var app = express();
 
@@ -17,29 +14,34 @@ var app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-app.use(
-  session({
-    secret: "keyboard cat",
-    resave: false,
-    saveUninitialized: true,
-    cookie: {},
-  })
-);
 app.use(flash());
 app.use(methodOverride("_method"));
 app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
   "/adminlte",
   express.static(path.join(__dirname, "/node_modules/admin-lte/"))
 );
+// creating 24 hours from milliseconds
+const oneDay = 1000 * 60 * 60 * 24;
 
-app.use("/", indexRouter);
-// app.use("/category", categoryRouter);
-// app.use("/nominal", nominalRouter);
+//session middleware
+app.use(
+  sessions({
+    secret: "bigs-integration-technology",
+    saveUninitialized: true,
+    // cookie: { maxAge: oneDay, secure: true },x
+    resave: false,
+  })
+);
+
+app.use("/", require("./app/routes/dashboard"));
+app.use("/auth", require("./app/routes/auth"));
+app.use("/board", require("./app/routes/board"));
+app.use("/board/task", require("./app/routes/task"));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
